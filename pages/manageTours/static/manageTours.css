@@ -1,0 +1,271 @@
+body {
+  font-family: Tahoma, "Trebuchet MS", sans-serif;
+  min-height: 100vh;
+}
+
+#tours, #stations {
+    display: none;
+}
+
+.Main {
+    font-family: Tahoma, "Trebuchet MS", sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+}
+
+#manageTours_tab {
+  font-size: 130%;
+  color: #b6cdff;
+}
+
+h1 {
+  text-align: center;
+}
+
+#crudBtn {
+  background-color: #383737;
+  color: white;
+  cursor: pointer;
+  border: 2px solid #383737;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 7%;
+}
+
+.crudPopup {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  width: 40%;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-image: url("img/parkKarasoBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  border: solid 2px black;
+}
+
+.topBtn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.topBtn button {
+  width: 45%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  font-family: Tahoma, "Trebuchet MS", sans-serif;
+  font-size: 110%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  cursor: pointer;
+}
+
+.topBtn button:hover {
+  background-color: rgba(255, 255, 255);
+}
+
+#exit {
+  width: 10%;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+#addBtn {
+  border-left: 1px solid black;
+}
+
+#addTourForm {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+#editTourForm {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.item {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 30px;
+}
+
+label {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+input {
+  font-family: Tahoma, "Trebuchet MS", sans-serif;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+input[type=number] {
+  width: 20%;
+  text-align: center;
+}
+
+select {
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.item:nth-child(7) {
+  flex-direction: column;
+  align-items: end;
+}
+
+#mandatory_tags {
+  display: flex;
+  flex-direction: row;
+}
+
+.station_tag {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 0 5px;
+  margin: 0 5px;
+  width: fit-content;
+}
+
+.tag_name {
+  color: black;
+  font-size: 60%;
+  background-color: rgba(0, 0, 0, 0);
+  width: fit-content;
+  margin-left: 3px;
+}
+
+.tag_btn {
+  border: none;
+  border-radius: 10px;
+  color: black;
+  font-size: 60%;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0);
+  width: fit-content;
+  height: fit-content;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.tag_btn:hover {
+  background-color: lightgray;
+}
+
+.add_select_station, .edit_select_station {
+  display: flex;
+  margin: 5px 20px;
+}
+
+.route_btn {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px 10px;
+  color: black;
+  font-size: 120%;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.route_btn:hover {
+  background-color: rgba(255, 255, 255);
+}
+
+#add_delete_station, #edit_delete_station {
+  font-size: 60%;
+}
+
+.error_msg {
+  display: none;
+  color: #ff0005;
+  text-align: center;
+  font-size: 90%;
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+#add , #edit {
+  background-color: rgba(255, 255, 255, 0);
+  color: black;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 15px 25px 15px 25px;
+  font-weight: bold;
+}
+
+#add:hover , #edit:hover {
+  background-color: rgba(255, 255, 255);
+}
+
+th {
+  background-color: #051331;
+  color: white;
+  padding: 8px;
+}
+
+tr {
+  background-color: #e0e0e0;
+}
+
+td {
+  padding: 5px;
+  width: fit-content;
+  max-width: 45vw;
+  text-align: center;
+}
+
+.tempMsg {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0px;
+  right: 25%;
+  left: 25%;
+  padding: 10px;
+  background-color:rgba(0,0,0,0.9);
+  color: white;
+  text-align: center;
+}
+
+#okBtn {
+  background-color: white;
+  color: black;
+}
+
+#okBtn:hover {
+  background-color: white;
+}

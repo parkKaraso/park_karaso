@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>navBar</title>
+  <link rel="stylesheet" href="{{ url_for('navbar.static', filename='navbar.css') }}">
+</head>
+<body>
+  <div class="Nav">
+    <button id="logout" class="Item" dir="rtl"><a href="{{ url_for('navbar.logout') }}">התנתק</a></button>
+    <ul>
+        <li><a class="Item" id="reports_tab" href="{{ url_for('reports.index') }}">דוחות</a></li>
+        <li><a class="Item" id="view_schedules_tab" href="{{ url_for('view_schedules.index') }}">צפייה בלו"זים</a></li>
+        <li><a class="Item" id="createSched_tab" href="{{ url_for('createSched.index') }}">יצירת לו"ז</a></li>
+        <li><a class="Item" id="manageTours_tab" href="{{ url_for('manageTours.index') }}">ניהול סיורים</a></li>
+        <li><a class="Item" id="manageStations_tab" href="{{ url_for('manageStations.index') }}">ניהול תחנות</a></li>
+    </ul>
+    <img id="logo" class="Item" src="{{ url_for('navbar.static', filename='img/karasoLogo.png') }}">
+  </div>
+
+  <script src="{{ url_for('navbar.static', filename='navbar.js') }}"></script>
+</body>
+</html>

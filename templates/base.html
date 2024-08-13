@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    {% block page_head %}
+    <meta charset="UTF-8">
+    <title>{{ page_title }}</title>
+    {% block page_head_css %}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block page_content %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block page_main %}{% endblock %}
+{% block page_body_js %}{% endblock %}
+</body>
+</html>

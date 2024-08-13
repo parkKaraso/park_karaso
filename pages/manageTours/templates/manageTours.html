@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'manageTours' %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('manageTours.static', filename='manageTours.css') }}"/>
+    <script src="https://kit.fontawesome.com/06605cb3e5.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block page_main %}
+    <div id="tours">{{ tours }}</div>
+    <div id="stations">{{ stations }}</div>
+    <div class="Main">
+        <h1 dir="rtl">סיורים במוזיאון</h1>
+        <button id="crudBtn">עריכה / הוספה</button>
+        <table id="toursTable">
+            <tr>
+                <th dir="rtl">מסלול אידיאלי</th>
+                <th dir="rtl">תחנות חובה</th>
+                <th dir="rtl">גיל</th>
+                <th dir="rtl">שם סיור</th>
+            </tr>
+            {% for tour in tours %}
+                <tr>
+                    <td dir="rtl" class="ideal_track">{{ tour['מסלול אידיאלי'] }}</td>
+                    <td dir="rtl" class="mandatory_list">{{ tour['תחנות חובה'] }}</td>
+                    <td dir="rtl">{{ tour['גיל'][0] }}-{{ tour['גיל'][1] }}</td>
+                    <td dir="rtl">{{ tour['סיור'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="crudPopup">
+            <div class="topBtn">
+                <button id="editBtn">ערוך סיור</button>
+                <button id="addBtn" class="active">הוסף סיור</button>
+                <button id="exit"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
+            <div id="addTourForm">
+                <form action="/addTour" method="post">
+                    <div class="item">
+                        <input type="text" name="name" dir="rtl" required>
+                        <label dir="rtl">שם הסיור</label>
+                    </div>
+                    <div class="item">
+                        <select id="addMaxAge" name="maxAge">
+                            <option value="0" dir="rtl">גן</option>
+                            <option value="1" dir="rtl">א'</option>
+                            <option value="2" dir="rtl">ב'</option>
+                            <option value="3" dir="rtl">ג'</option>
+                            <option value="4" dir="rtl">ד'</option>
+                            <option value="5" dir="rtl">ה'</option>
+                            <option value="6" dir="rtl">ו'</option>
+                            <option value="7" dir="rtl">ז'</option>
+                            <option value="8" dir="rtl">ח'</option>
+                            <option value="9" dir="rtl">ט'</option>
+                            <option value="10" dir="rtl">י'</option>
+                            <option value="11" dir="rtl">יא'</option>
+                            <option value="12" dir="rtl" selected>יב'</option>
+                        </select>
+                        <label>גיל מקסימום</label>
+                        <select id="addMinAge" name="minAge">
+                            <option value="0" dir="rtl" selected>גן</option>
+                            <option value="1" dir="rtl">א'</option>
+                            <option value="2" dir="rtl">ב'</option>
+                            <option value="3" dir="rtl">ג'</option>
+                            <option value="4" dir="rtl">ד'</option>
+                            <option value="5" dir="rtl">ה'</option>
+                            <option value="6" dir="rtl">ו'</option>
+                            <option value="7" dir="rtl">ז'</option>
+                            <option value="8" dir="rtl">ח'</option>
+                            <option value="9" dir="rtl">ט'</option>
+                            <option value="10" dir="rtl">י'</option>
+                            <option value="11" dir="rtl">יא'</option>
+                            <option value="12" dir="rtl">יב'</option>
+                        </select>
+                        <label>גיל מינימום</label>
+                    </div>
+                    <div class="item">
+                        <input type="number" name="priority" min="1" value="1" required>
+                        <label dir="rtl">מה התעדוף של הסיור?</label>
+                    </div>
+                    <div class="item">
+                        <select id="add_mandatory_list" name="add_mandatory_list">
+                            <option value="choose" dir="rtl">בחר תחנה</option>
+                            {% for station in stations %}
+                                <option value="{{ station['שם תחנה'] }}" dir="rtl">{{ station['שם תחנה'] }}</option>
+                            {% endfor %}
+                        </select>
+                        <label>תחנות חובה</label>
+                    </div>
+                    <div class="item" id="mandatory_tags"></div>
+                    <div id="mandatory_selected"></div>
+                    <div class="item">
+                        <label dir="rtl">מסלול אידיאלי</label>
+                        <div class="add_select_station">
+                            <select class="add_route" name="add_route">
+                                {% for station in stations %}
+                                    <option value="{{ station['שם תחנה'] }}" dir="rtl">{{ station['שם תחנה'] }}</option>
+                                {% endfor %}
+                            </select>
+                            <label dir="rtl">תחנה מספר 1:</label>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <button type="button" id="add_delete_station" class="route_btn">מחק תחנה מהמסלול</button>
+                        <button type="button" id="add_station_to_route" class="route_btn">+</button>
+                    </div>
+                    <p class="error_msg" dir="rtl"></p>
+                    <input id="add" type="submit" value="הוסף" >
+                </form>
+            </div>
+            <div id="editTourForm">
+                <form action="/editTour" method="post">
+                    <div class="item">
+                        <select id="tourName" name="name">
+                            {% for tour in tours %}
+                                <option value="{{ tour['סיור'] }}" dir="rtl">{{ tour['סיור'] }}</option>
+                            {% endfor %}
+                        </select>
+                        <label dir="rtl">איזה סיור תרצה לערוך?</label>
+                    </div>
+                    <div class="item">
+                        <select id="editMaxAge" name="maxAge">
+                            <option value="0" dir="rtl">גן</option>
+                            <option value="1" dir="rtl">א'</option>
+                            <option value="2" dir="rtl">ב'</option>
+                            <option value="3" dir="rtl">ג'</option>
+                            <option value="4" dir="rtl">ד'</option>
+                            <option value="5" dir="rtl">ה'</option>
+                            <option value="6" dir="rtl">ו'</option>
+                            <option value="7" dir="rtl">ז'</option>
+                            <option value="8" dir="rtl">ח'</option>
+                            <option value="9" dir="rtl">ט'</option>
+                            <option value="10" dir="rtl">י'</option>
+                            <option value="11" dir="rtl">יא'</option>
+                            <option value="12" dir="rtl" selected>יב'</option>
+                        </select>
+                        <label>גיל מקסימום</label>
+                        <select id="editMinAge" name="minAge">
+                            <option value="0" dir="rtl" selected>גן</option>
+                            <option value="1" dir="rtl">א'</option>
+                            <option value="2" dir="rtl">ב'</option>
+                            <option value="3" dir="rtl">ג'</option>
+                            <option value="4" dir="rtl">ד'</option>
+                            <option value="5" dir="rtl">ה'</option>
+                            <option value="6" dir="rtl">ו'</option>
+                            <option value="7" dir="rtl">ז'</option>
+                            <option value="8" dir="rtl">ח'</option>
+                            <option value="9" dir="rtl">ט'</option>
+                            <option value="10" dir="rtl">י'</option>
+                            <option value="11" dir="rtl">יא'</option>
+                            <option value="12" dir="rtl">יב'</option>
+                        </select>
+                        <label>גיל מינימום</label>
+                    </div>
+                    <div class="item">
+                        <input type="number" name="priority" min="1" value="" required>
+                        <label dir="rtl">מה התעדוף של הסיור?</label>
+                    </div>
+                    <div class="item">
+                        <select id="edit_mandatory_list" name="edit_mandatory_list">
+                            <option value="choose" dir="rtl">בחר תחנה</option>
+                            {% for station in stations %}
+                                <option value="{{ station['שם תחנה'] }}" dir="rtl">{{ station['שם תחנה'] }}</option>
+                            {% endfor %}
+                        </select>
+                        <label>תחנות חובה</label>
+                    </div>
+                    <div class="item" id="edit_mandatory_tags"></div>
+                    <div id="edit_mandatory_selected"></div>
+                    <div class="item">
+                        <label dir="rtl">מסלול אידיאלי</label>
+                        <div class="edit_select_station">
+                            <select class="add_route" name="edit_route">
+                                {% for station in stations %}
+                                    <option value="{{ station['שם תחנה'] }}" dir="rtl">{{ station['שם תחנה'] }}</option>
+                                {% endfor %}
+                            </select>
+                            <label dir="rtl">תחנה מספר 1:</label>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <button type="button" id="edit_delete_station" class="route_btn">מחק תחנה מהמסלול</button>
+                        <button type="button" id="edit_station_to_route" class="route_btn">+</button>
+                    </div>
+                    <p class="error_msg" dir="rtl">אין אפשרות למחוק תחנה, המסלול האידיאלי חייב להכיל לפחות תחנה אחת</p>
+                    <input id="edit" type="submit" value="עדכן" >
+                </form>
+            </div>
+        </div>
+
+        {% if message %}
+            <div class="tempMsg">
+                <p id="tempMsg"> {{ message }}</p>
+                <button id="okBtn">OK</button>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block page_body_js %}
+    <script src="{{ url_for('manageTours.static', filename='manageTours.js') }}"></script>
+{% endblock %}
+
+

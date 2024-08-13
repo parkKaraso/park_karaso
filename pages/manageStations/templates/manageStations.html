@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'manageStations' %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('manageStations.static', filename='manageStations.css') }}"/>
+    <script src="https://kit.fontawesome.com/06605cb3e5.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block page_main %}
+    <div id="stations">{{ stations }}</div>
+    <div class="Main">
+        <h1 dir="rtl">תחנות במוזיאון</h1>
+        <button id="crudBtn">עריכה / הוספה</button>
+        <table id="stationsTable">
+            <tr>
+                <th dir="rtl">זמן סיור</th>
+                <th dir="rtl">גיל</th>
+                <th dir="rtl">שם תחנה</th>
+            </tr>
+            {% for station in stations %}
+                <tr>
+                    <td dir="rtl">{{ station['זמן סיור'] }} שעה</td>
+                    <td dir="rtl">{{ station['גיל'][0] }}-{{ station['גיל'][1] }}</td>
+                    <td dir="rtl">{{ station['שם תחנה'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="crudPopup">
+        <div class="topBtn">
+            <button id="editBtn">ערוך תחנה</button>
+            <button id="addBtn" class="active">הוסף תחנה</button>
+            <button id="exit"><i class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div id="addStationForm">
+            <form action="/addStation" method="post">
+                <div class="item">
+                    <input type="text" name="name" dir="rtl" required>
+                    <label dir="rtl">שם התחנה</label>
+                </div>
+                <div class="item">
+                <select id="addMaxAge" name="maxAge">
+                    <option value="0" dir="rtl">גן</option>
+                    <option value="1" dir="rtl">א'</option>
+                    <option value="2" dir="rtl">ב'</option>
+                    <option value="3" dir="rtl">ג'</option>
+                    <option value="4" dir="rtl">ד'</option>
+                    <option value="5" dir="rtl">ה'</option>
+                    <option value="6" dir="rtl">ו'</option>
+                    <option value="7" dir="rtl">ז'</option>
+                    <option value="8" dir="rtl">ח'</option>
+                    <option value="9" dir="rtl">ט'</option>
+                    <option value="10" dir="rtl">י'</option>
+                    <option value="11" dir="rtl">יא'</option>
+                    <option value="12" dir="rtl" selected>יב'</option>
+                </select>
+                    <label>גיל מקסימום</label>
+                    <select id="addMinAge" name="minAge">
+                    <option value="0" dir="rtl" selected>גן</option>
+                    <option value="1" dir="rtl">א'</option>
+                    <option value="2" dir="rtl">ב'</option>
+                    <option value="3" dir="rtl">ג'</option>
+                    <option value="4" dir="rtl">ד'</option>
+                    <option value="5" dir="rtl">ה'</option>
+                    <option value="6" dir="rtl">ו'</option>
+                    <option value="7" dir="rtl">ז'</option>
+                    <option value="8" dir="rtl">ח'</option>
+                    <option value="9" dir="rtl">ט'</option>
+                    <option value="10" dir="rtl">י'</option>
+                    <option value="11" dir="rtl">יא'</option>
+                    <option value="12" dir="rtl">יב'</option>
+                </select>
+                    <label>גיל מינימום</label>
+                </div>
+                <div class="item">
+                    <label for="add_full">שעה</label>
+                    <input type="radio" id="add_full" name="time" value="1">
+                    <label for="add_half">חצי שעה</label>
+                    <input type="radio" id="add_half" name="time" value="0.5" checked>
+                    <label>זמן בתחנה</label>
+                </div>
+                <div class="item">
+                    <input type="number" name="groups" min="1" value="1" required>
+                    <label dir="rtl">כמה קבוצות במקביל יכולות להיות בתחנה?</label>
+                </div>
+                <input id="add" type="submit" value="הוסף" >
+            </form>
+        </div>
+        <div id="editStationForm">
+            <form action="/editStation" method="post">
+                <div class="item">
+                    <select id="stationName" name="stationName">
+                    {% for station in stations %}
+                        <option value="{{ station['שם תחנה'] }}" dir="rtl">{{ station['שם תחנה'] }}</option>
+                    {% endfor %}
+                    </select>
+                    <label dir="rtl">איזה תחנה תרצה לערוך?</label>
+                </div>
+                <div class="item">
+                    <select id="editMaxAge" name="editMaxAge">
+                        <option value="0" dir="rtl">גן</option>
+                        <option value="1" dir="rtl">א'</option>
+                        <option value="2" dir="rtl">ב'</option>
+                        <option value="3" dir="rtl">ג'</option>
+                        <option value="4" dir="rtl">ד'</option>
+                        <option value="5" dir="rtl">ה'</option>
+                        <option value="6" dir="rtl">ו'</option>
+                        <option value="7" dir="rtl">ז'</option>
+                        <option value="8" dir="rtl">ח'</option>
+                        <option value="9" dir="rtl">ט'</option>
+                        <option value="10" dir="rtl">י'</option>
+                        <option value="11" dir="rtl">יא'</option>
+                        <option value="12" dir="rtl">יב'</option>
+                    </select>
+                    <label>גיל מקסימום</label>
+                    <select id="editMinAge" name="editMinAge">
+                        <option value="0" dir="rtl">גן</option>
+                        <option value="1" dir="rtl">א'</option>
+                        <option value="2" dir="rtl">ב'</option>
+                        <option value="3" dir="rtl">ג'</option>
+                        <option value="4" dir="rtl">ד'</option>
+                        <option value="5" dir="rtl">ה'</option>
+                        <option value="6" dir="rtl">ו'</option>
+                        <option value="7" dir="rtl">ז'</option>
+                        <option value="8" dir="rtl">ח'</option>
+                        <option value="9" dir="rtl">ט'</option>
+                        <option value="10" dir="rtl">י'</option>
+                        <option value="11" dir="rtl">יא'</option>
+                        <option value="12" dir="rtl">יב'</option>
+                    </select>
+                    <label>גיל מינימום</label>
+                </div>
+                <div class="item">
+                    <label for="edit_full">שעה</label>
+                    <input type="radio" id="edit_full" name="time" value="1">
+                    <label for="edit_half">חצי שעה</label>
+                    <input type="radio" id="edit_half" name="time" value="0.5">
+                    <label>זמן בתחנה</label>
+                </div>
+                <input id="edit" type="submit" value="עדכן" >
+            </form>
+        </div>
+</div>
+  </div>
+
+{% if message %}
+        <div class="tempMsg">
+            <p id="tempMsg"> {{ message }}</p>
+            <button id="okBtn">OK</button>
+        </div>
+{% endif %}
+
+{% endblock %}
+
+{% block page_body_js %}
+    <script src="{{ url_for('manageStations.static', filename='manageStations.js') }}"></script>
+{% endblock %}
+

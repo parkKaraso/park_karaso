@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'homePage' %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('homePage.static', filename='homePage.css') }}"/>
+{% endblock %}
+
+{% block page_content %}{% endblock %}
+
+{% block page_main %}
+<div class="main">
+    <div class="welcomeMessage">
+        <p dir="rtl">ברוכה הבאה למערכת ניהול סיורים</p>
+    </div>
+    <div class="formContainer">
+        <form id="signInForm" action="/login" method="post">
+            <label dir="rtl">סיסמה:</label>
+            <input type="password" name="Password" required>
+            <input id="signInBtn" type="submit" value="התחבר" >
+            {% if errorSI %}
+                <p id="errorSI" style="color: red;">{{ errorSI }}</p>
+            {% endif %}
+        </form>
+    </div>
+    <div class="desc">
+        <p dir="rtl">במערכת תוכלו ליצור לוח זמנים לכל יום פעילות במוזיאון, לנהל את מבנה הסיורים והתחנות במוזיאון</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_body_js %}
+    <script src="{{ url_for('homePage.static', filename='homePage.js') }}"></script>
+{% endblock %}

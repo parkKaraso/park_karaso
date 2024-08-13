@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'reports' %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('reports.static', filename='reports.css') }}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/06605cb3e5.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block page_main %}
+
+{% endblock %}
+
+{% block page_body_js %}
+    <script src="{{ url_for('reports.static', filename='reports.js') }}"></script>
+{% endblock %}

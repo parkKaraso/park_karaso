@@ -1,0 +1,135 @@
+body {
+    height: 100%;
+}
+
+#stations, #schedules_dates {
+    display: none;
+}
+
+ #view_schedules_tab {
+    font-size: 130%;
+    color: #b6cdff;
+ }
+
+ .Main {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 100%;
+ }
+
+#datepicker {
+    padding: 10px;
+}
+
+#datepicker .pika-single {
+    direction: rtl;
+}
+
+#datepicker .pika-lendar {
+    width: fit-content;
+}
+
+#datepicker .pika-table {
+    width: fit-content;
+}
+
+ #all_stations {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: end;
+    padding-right: 10px;
+}
+
+ .draggable_station {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 2px 5px;
+    width: fit-content;
+    text-align: center;
+    font-size: 80%;
+    cursor: pointer;
+ }
+
+ .draggable_cell {
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+ }
+
+.ui-draggable-dragging {
+    width: auto;
+    z-index: 2;
+ }
+
+#schedule {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#no_schedule {
+    display: none;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+}
+
+#schedule_header {
+    text-align: center;
+}
+
+table {
+    height: fit-content;
+    margin: 10px;
+}
+
+ th {
+    background-color: #051331;
+    color: white;
+    border: 1px solid black;
+    padding: 10px;
+ }
+
+ td {
+    background-color: white;
+    border: 1px solid black;
+    text-align: center;
+ }
+
+ td input {
+    background-color: white;
+    text-align: center;
+    border: none;
+    height: 100%;
+ }
+
+#save_schedule {
+    background-color: #051331;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 30px;
+    cursor: pointer;
+}
+
+#footer {
+    display: flex;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+
+}
+
+ #trash {
+    padding: 25px 20px;
+    margin: 20px;
+    background-color: green;
+    border-radius: 50px;
+ }

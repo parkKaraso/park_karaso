@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'view_schedules' %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('view_schedules.static', filename='view_schedules.css') }}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="https://kit.fontawesome.com/06605cb3e5.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+{% endblock %}
+
+{% block page_main %}
+    <div id="stations">{{ stations }}</div>
+    <div id="schedules_dates">{{ schedules }}</div>
+    <div class="Main">
+        <div id="datepicker"></div>
+        <div id="schedule">
+            <h1 id="schedule_header" dir="rtl"></h1>
+            <table>
+                <tr>
+                    <th dir="rtl">11:30-12:00</th>
+                    <th dir="rtl">11:00-11:30</th>
+                    <th dir="rtl">10:30-11:00</th>
+                    <th dir="rtl">10:00-10:30</th>
+                    <th dir="rtl">9:30-10:00</th>
+                    <th dir="rtl">9:00-9:30</th>
+                    <th dir="rtl">מדריך</th>
+                    <th dir="rtl">בית ספר</th>
+                    <th dir="rtl">שם התוכנית</th>
+                </tr>
+            </table>
+            <div id="save_schedule" dir="rtl">שמור שינויים</div>
+        </div>
+        <div id="no_schedule">
+            <p>במערכת לא קיים לוח זמנים לתאריך הנבחר</p>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div id="trash"><i class="fa-solid fa-trash-can fa-2xl"></i></div>
+        <div id="all_stations">
+            {% for station in stations %}
+                <div class="draggable_station" data-station-id="{{ loop.index }}" dir="rtl">{{ station['שם תחנה'] }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_body_js %}
+    <script src="{{ url_for('view_schedules.static', filename='view_schedules.js') }}"></script>
+{% endblock %}

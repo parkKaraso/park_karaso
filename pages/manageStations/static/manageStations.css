@@ -1,0 +1,190 @@
+body {
+  font-family: Tahoma, "Trebuchet MS", sans-serif;
+  min-height: 100vh;
+}
+
+.Main {
+    font-family: Tahoma, "Trebuchet MS", sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 15px 50px;
+}
+
+#manageStations_tab {
+  font-size: 130%;
+  color: #b6cdff;
+}
+
+h1 {
+  text-align: center;
+}
+
+#crudBtn {
+  background-color: #383737;
+  color: white;
+  cursor: pointer;
+  border: 2px solid #383737;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 7%;
+}
+
+.crudPopup {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  width: 40%;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-image: url("img/parkKarasoBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  border: solid 2px black;
+}
+
+.topBtn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.topBtn button {
+  width: 45%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  font-family: Tahoma, "Trebuchet MS", sans-serif;
+  font-size: 110%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  cursor: pointer;
+}
+
+.topBtn button:hover {
+  background-color: rgba(255, 255, 255);
+}
+
+#exit{
+  width: 10%;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+#addBtn {
+  border-left: 1px solid black;
+}
+
+#addStationForm {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 40vh;
+  overflow-y: scroll;
+}
+
+#editStationForm {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 40vh;
+  overflow-y: scroll;
+}
+
+.item {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 30px;
+}
+
+label {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+input {
+  font-family: Tahoma, "Trebuchet MS", sans-serif;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+input[type=number] {
+  width: 20%;
+  text-align: center;
+}
+
+select {
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+#add , #edit {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 15px 25px 15px 25px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+#add:hover , #edit:hover {
+  background-color: rgba(255, 255, 255);
+}
+
+#stations {
+    display: none;
+}
+
+th {
+  background-color: #051331;
+  color: white;
+  padding: 8px;
+}
+
+tr {
+  background-color: #e0e0e0;
+}
+
+td {
+  padding: 5px;
+  width: fit-content;
+  max-width: 45vw;
+  text-align: center;
+}
+
+.tempMsg {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0px;
+  right: 25%;
+  left: 25%;
+  padding: 10px;
+  background-color:rgba(0,0,0,0.9);
+  color: white;
+  text-align: center;
+}
+
+.tempMsg button {
+  background-color: white;
+  color: black;
+}
+
+.tempMsg button:hover {
+  background-color: white;
+}

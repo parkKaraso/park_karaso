@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'createSched' %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('createSched.static', filename='createSched.css') }}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/06605cb3e5.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block page_main %}
+    <div id="tours">{{ tours }}</div>
+    <div id="stations">{{ stations }}</div>
+    <div id="schedule_data">{{ schedule }}</div>
+    <div id="create">{{ create }}</div>
+    <div id="schedule_date">{{ schedule_date }}</div>
+    <div class="Main">
+        {% if create %}
+            <div id="add_tours_data">
+                <form id="tours_data_form" action="/create_schedule" method="post">
+                    <h1 dir="rtl">יצירת לוח זמנים יומי</h1>
+                    <div id="select_date">
+                        <input type="date" id="schedule_date_input" name="schedule_date_input" required>
+                        <label dir="rtl">עבור איזה תאריך תרצה ליצור לו"ז?</label>
+                    </div>
+                    <div id="all_selects">
+                        <div class="select_div">
+                            <label dir="rtl">שם הסיור</label>
+                            <select class="select_tour_name" name="select_tour_name">
+                                {% for tour in tours %}
+                                    <option value="{{ tour['סיור'] }}" dir="rtl">{{ tour['סיור'] }}</option>
+                                {% endfor %}
+                            </select>
+                            <label dir="rtl">כמה קבוצות?</label>
+                            <input type="number" name="num_of_groups" min="1" value="1" required>
+                            <button type="button" class="delete_tour">X</button>
+                        </div>
+                    </div>
+                    <button type="button" id="add_tour">+</button>
+                    <input id="create_schedule" type="submit" value="צור לוח זמנים" >
+                </form>
+            </div>
+        {% else %}
+        <div id="schedule">
+            <h1 id="schedule_header" dir="rtl">שיבוץ סיורים לתאריך {{ schedule_date }}</h1>
+            <table>
+                <tr>
+                    <th dir="rtl">11:30-12:00</th>
+                    <th dir="rtl">11:00-11:30</th>
+                    <th dir="rtl">10:30-11:00</th>
+                    <th dir="rtl">10:00-10:30</th>
+                    <th dir="rtl">9:30-10:00</th>
+                    <th dir="rtl">9:00-9:30</th>
+                    <th dir="rtl">מדריך</th>
+                    <th dir="rtl">בית ספר</th>
+                    <th dir="rtl">שם התוכנית</th>
+                </tr>
+                {% for s in schedule %}
+                    <tr data-row-index="{{ loop.index }}">
+                        <td class="droppable" data-time-slot="6"><div class="draggable_cell" dir="rtl">{{ s['11.5'] }}</div></td>
+                        <td class="droppable" data-time-slot="5"><div class="draggable_cell" dir="rtl">{{ s['11.0'] }}</div></td>
+                        <td class="droppable" data-time-slot="4"><div class="draggable_cell" dir="rtl">{{ s['10.5'] }}</div></td>
+                        <td class="droppable" data-time-slot="3"><div class="draggable_cell" dir="rtl">{{ s['10.0'] }}</div></td>
+                        <td class="droppable" data-time-slot="2"><div class="draggable_cell" dir="rtl">{{ s['9.5'] }}</div></td>
+                        <td class="droppable" data-time-slot="1"><div class="draggable_cell" dir="rtl">{{ s['9.0'] }}</div></td>
+                        <td dir="rtl"><input type="text"></td>
+                        <td dir="rtl"><input type="text"></td>
+                        <td class="tour_name" dir="rtl">{{ s['tour_name'] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div id="save_schedule" dir="rtl">שמור שינויים</div>
+        </div>
+    </div>
+    <div id="colors"></div>
+    <div id="footer">
+        <div id="trash"><i class="fa-solid fa-trash-can fa-2xl"></i></div>
+        <div id="all_stations">
+            {% for station in stations %}
+                <div class="draggable_station" data-station-id="{{ loop.index }}" dir="rtl">{{ station['שם תחנה'] }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_body_js %}
+    <script src="{{ url_for('createSched.static', filename='createSched.js') }}"></script>
+{% endblock %}
