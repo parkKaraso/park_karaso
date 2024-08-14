@@ -33,5 +33,5 @@ app.register_blueprint(navbar)
 
 
 if __name__ == '__main__':
-    app.run(host=app.config['FLASK_RUN_HOST'], port=int(app.config['FLASK_RUN_PORT']))
+    app.run()
 
