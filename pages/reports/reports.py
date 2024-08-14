@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from parkKaraso.utilities.db_manager import *
+from utilities.db_manager import *
 
 reports = Blueprint(
     'reports',

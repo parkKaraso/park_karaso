@@ -1,4 +1,4 @@
-from parkKaraso.utilities.db_manager import *
+from utilities.db_manager import *
 
 stations = ()
 unique_stations = ()

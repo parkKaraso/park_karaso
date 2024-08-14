@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, session
 
-from parkKaraso.pages.view_schedules.templates.updateScheduleFunc import init_lists
-from parkKaraso.utilities.db_manager import *
+from utilities.db_manager import *
 
 homePage = Blueprint(
     'homePage',
@@ -17,10 +16,10 @@ def index():
     return render_template('homePage.html')
 
 
-@homePage.route('/login', methods=['POST'])
+@homePage.route('/login', methods=['GET'])
 def login_func():
-    if 'Password' in request.form:
-        password = request.form['Password']
+    if 'Password' in request.args:
+        password = request.args['Password']
         if password == '1':
             session['logged_in'] = 'True'
             stations = get_unique_stations_list()

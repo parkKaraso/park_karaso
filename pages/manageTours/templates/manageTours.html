@@ -36,7 +36,7 @@
                 <button id="exit"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <div id="addTourForm">
-                <form action="/addTour" method="post">
+                <form action="/addTour" method="get">
                     <div class="item">
                         <input type="text" name="name" dir="rtl" required>
                         <label dir="rtl">שם הסיור</label>
@@ -110,7 +110,7 @@
                 </form>
             </div>
             <div id="editTourForm">
-                <form action="/editTour" method="post">
+                <form action="/editTour" method="get">
                     <div class="item">
                         <select id="tourName" name="name">
                             {% for tour in tours %}

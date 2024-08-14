@@ -33,7 +33,7 @@
             <button id="exit"><i class="fa fa-times" aria-hidden="true"></i></button>
         </div>
         <div id="addStationForm">
-            <form action="/addStation" method="post">
+            <form action="/addStation" method="get">
                 <div class="item">
                     <input type="text" name="name" dir="rtl" required>
                     <label dir="rtl">שם התחנה</label>
@@ -87,7 +87,7 @@
             </form>
         </div>
         <div id="editStationForm">
-            <form action="/editStation" method="post">
+            <form action="/editStation" method="get">
                 <div class="item">
                     <select id="stationName" name="stationName">
                     {% for station in stations %}

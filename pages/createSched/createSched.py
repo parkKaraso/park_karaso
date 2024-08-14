@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request
 from datetime import datetime
 import json
-from parkKaraso.pages.createSched.createScheduleFunc import *
-from parkKaraso.utilities.db_manager import *
+from pages.createSched.createScheduleFunc import *
+from utilities.db_manager import *
 
 createSched = Blueprint(
     'createSched',
@@ -20,12 +20,12 @@ def index():
     return render_template('createSched.html', tours=tours, stations=stations, create=True)
 
 
-@createSched.route('/create_schedule', methods=['POST'])
+@createSched.route('/create_schedule', methods=['GET'])
 def createSchedule():
-    tours_for_today = request.form.getlist('select_tour_name')
-    number_of_groups = request.form.getlist('num_of_groups')
+    tours_for_today = request.args.getlist('select_tour_name')
+    number_of_groups = request.args.getlist('num_of_groups')
     schedule = create_schedule(tours_for_today, number_of_groups)
-    date = request.form['schedule_date_input']
+    date = request.args['schedule_date_input']
     schedule_date = date[8:10] + '/' + date[5:7] + '/' + date[0:4]
     unique_stations = get_unique_stations_list()
     add_schedule(date, schedule)

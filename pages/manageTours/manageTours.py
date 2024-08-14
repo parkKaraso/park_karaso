@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 
-from parkKaraso.utilities.db_manager import *
+from utilities.db_manager import *
 
 manageTours = Blueprint(
     'manageTours',
@@ -18,14 +18,14 @@ def index():
     return render_template('manageTours.html', tours=tours, stations=stations)
 
 
-@manageTours.route('/addTour', methods=['POST'])
+@manageTours.route('/addTour', methods=['GET'])
 def add_func():
-    tour = {"name": request.form['name'],
-                "maxAge": request.form['maxAge'],
-                "minAge": request.form['minAge'],
-                "priority": request.form['priority'],
-                "mandatory_list": request.form.getlist('selected_tags'),
-                "route": request.form.getlist('add_route')}
+    tour = {"name": request.args['name'],
+                "maxAge": request.args['maxAge'],
+                "minAge": request.args['minAge'],
+                "priority": request.args['priority'],
+                "mandatory_list": request.args.getlist('selected_tags'),
+                "route": request.args.getlist('add_route')}
     insert_tour(tour)
     tours = get_tours_list()
     stations = get_unique_stations_list()
@@ -33,14 +33,14 @@ def add_func():
     return render_template('manageTours.html', tours=tours, stations=stations, message=msg)
 
 
-@manageTours.route('/editTour', methods=['POST'])
+@manageTours.route('/editTour', methods=['GET'])
 def edit_func():
-    tour = {"name": request.form['name'],
-                "maxAge": request.form['maxAge'],
-                "minAge": request.form['minAge'],
-                "priority": request.form['priority'],
-                "mandatory_list": request.form.getlist('selected_tags'),
-                "route": request.form.getlist('edit_route')}
+    tour = {"name": request.args['name'],
+                "maxAge": request.args['maxAge'],
+                "minAge": request.args['minAge'],
+                "priority": request.args['priority'],
+                "mandatory_list": request.args.getlist('selected_tags'),
+                "route": request.args.getlist('edit_route')}
     update_tour(tour)
     tours = get_tours_list()
     stations = get_unique_stations_list()

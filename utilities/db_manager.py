@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get your MongoDB URI from environment variables
-uri = os.environ.get('DB_URI')
+uri = 'mongodb+srv://OmerGiron:WQzOq6WJ4zkKTXM6@cluster0.vkjllid.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 if not uri:
     raise ValueError("No DB_URI found in environment variables")

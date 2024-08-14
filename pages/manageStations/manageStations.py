@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 
-from parkKaraso.utilities.db_manager import *
+from utilities.db_manager import *
 
 manageStations = Blueprint(
     'manageStations',
@@ -17,24 +17,24 @@ def index():
     return render_template('manageStations.html', stations=stations)
 
 
-@manageStations.route('/addStation', methods=['POST'])
+@manageStations.route('/addStation', methods=['GET'])
 def add_func():
-    station = {"name": request.form['name'],
-                "maxAge": request.form['maxAge'],
-                "minAge": request.form['minAge'],
-                "time": request.form['time'],
-                "groups": request.form['groups']}
+    station = {"name": request.args['name'],
+                "maxAge": request.args['maxAge'],
+                "minAge": request.args['minAge'],
+                "time": request.args['time'],
+                "groups": request.args['groups']}
     insert_station(station)
     stations = get_unique_stations_list()
     msg = "התחנה התווספה בהצלחה!"
     return render_template('manageStations.html', stations=stations, message=msg)
 
 
-@manageStations.route('/editStation', methods=['POST'])
+@manageStations.route('/editStation', methods=['GET'])
 def edit_func():
-    station = {"שם תחנה": request.form['stationName'],
-                "גיל": [request.form['editMinAge'], request.form['editMaxAge']],
-                "זמן סיור": request.form['time']}
+    station = {"שם תחנה": request.args['stationName'],
+                "גיל": [request.args['editMinAge'], request.args['editMaxAge']],
+                "זמן סיור": request.args['time']}
     update_station(station)
     stations = get_unique_stations_list()
     msg = "פרטי התחנה התעדכנו בהצלחה!"

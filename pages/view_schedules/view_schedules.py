@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, jsonify
 
-from parkKaraso.pages.view_schedules.templates.updateScheduleFunc import *
-from parkKaraso.utilities.db_manager import *
+from pages.view_schedules.updateScheduleFunc import *
+from utilities.db_manager import *
 
 view_schedules = Blueprint(
     'view_schedules',
