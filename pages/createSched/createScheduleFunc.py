@@ -133,9 +133,10 @@ def create_schedule_arr():
     for key in schedule:
         tour_schedule = schedule[key]
         tour_schedule['tour_name'] = tours_for_schedule[key]['סיור']
+        tour_schedule['school_name'] = ''
+        tour_schedule['guide_name'] = ''
         schedule_arr.append(tour_schedule)
     return schedule_arr
-
 
 
 def convert_time_slot(time_slot):

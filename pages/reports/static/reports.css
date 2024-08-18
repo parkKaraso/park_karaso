@@ -54,7 +54,7 @@ body {
 
 .dashboard {
     width: 100%;
-    display: grid;
+    display: none;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 2fr;
     margin: 5px;
@@ -136,3 +136,11 @@ body {
     height: 100%;
 }
 
+#no_dashboard {
+    display: none;
+    flex-grow: 1;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+}

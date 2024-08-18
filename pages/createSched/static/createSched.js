@@ -12,9 +12,9 @@ function init() {
     let create = document.getElementById('create').textContent;
     if (create == 'True') {
        set_date();
-       const add_tour = document.getElementById('add_tour');
+       let add_tour = document.getElementById('add_tour');
        add_tour.addEventListener('click', add_tour_select);
-       const delete_tour = document.querySelectorAll('.delete_tour');
+       let delete_tour = document.querySelector('.delete_tour');
        for (let i=0; i<delete_tour.length; i++) {
            delete_tour[i].addEventListener('click', function() {
            delete_tour_select(this);
@@ -57,7 +57,7 @@ function check_before_submit(event) {
 }
 
 function set_date() {
-    today = new Date();
+    today = new Date('2024-08-01');
     let yyyy = today.getFullYear();
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let dd = String(today.getDate()).padStart(2, '0');

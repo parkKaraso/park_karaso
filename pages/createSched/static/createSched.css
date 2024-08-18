@@ -90,10 +90,12 @@ body {
 
 .delete_tour {
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     color: white;
     background-color: red;
     margin: 0 10px;
+    padding: 5px 10px;
+    font-weight: bold;
 }
 
 #add_tour {
@@ -232,6 +234,10 @@ table {
     border: none;
     height: 100%;
  }
+
+.tour_name {
+    padding: 10px;
+}
 
 #save_schedule {
     background-color: #051331;

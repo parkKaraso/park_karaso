@@ -116,6 +116,10 @@ table {
     height: 100%;
  }
 
+.tour_name {
+    padding: 10px;
+}
+
 #buttons {
     display: flex;
 }

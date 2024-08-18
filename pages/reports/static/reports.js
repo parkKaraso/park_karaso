@@ -56,11 +56,19 @@ function create_dashboard() {
         let schedules = data['schedules']
         let tours_appearance = data['tours_appearance']
         let stations_usage = data['stations_usage']
-        create_header(from_selectedDate, to_selectedDate);
-        create_summarize_data(schedules, from_selectedDate, to_selectedDate);
-        create_line_chart(schedules);
-        create_pie_chart(tours_names, tours_appearance);
-        create_bar_chart(stations_names, stations_usage);
+        if (schedules.length == 0) {
+            document.querySelector('.dashboard').style.display = 'none';
+            document.getElementById('no_dashboard').style.display = 'flex';
+        }
+        else {
+            document.getElementById('no_dashboard').style.display = 'none';
+            document.querySelector('.dashboard').style.display = 'grid';
+            create_header(from_selectedDate, to_selectedDate);
+            create_summarize_data(schedules, from_selectedDate, to_selectedDate);
+            create_line_chart(schedules);
+            create_pie_chart(tours_names, tours_appearance);
+            create_bar_chart(stations_names, stations_usage);
+        }
     });
 }
 
@@ -97,7 +105,7 @@ function create_summarize_data(schedules, from_selectedDate, to_selectedDate) {
     let sum_container = document.getElementById('sum_of_tours').querySelector('.number');
     sum_container.textContent = number_of_tours.toString();
     let avg_container = document.getElementById('average_of_tours').querySelector('.number');
-    let avg = number_of_tours/activity_days;
+    let avg = Math.round(number_of_tours/activity_days);
     avg_container.textContent = avg.toString();
 }
 
