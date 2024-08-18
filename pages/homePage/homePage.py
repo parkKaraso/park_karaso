@@ -20,7 +20,7 @@ def index():
 def login_func():
     if 'Password' in request.args:
         password = request.args['Password']
-        if password == '1':
+        if password == 'karaso2024':
             session['logged_in'] = 'True'
             stations = get_unique_stations_list()
             return render_template('manageStations.html', stations=stations)

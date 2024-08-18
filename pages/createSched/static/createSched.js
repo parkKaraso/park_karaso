@@ -3,7 +3,7 @@ let save_flag = false;
 
 window.addEventListener('beforeunload', function (e) {
     if (save_flag) {
-        let text = "לצאת מהאתר? ייתכן שהשינויים שביצעת לא יישמרו.";
+        let text = "לצאת מהעמוד? ייתכן שהשינויים שביצעת לא יישמרו.";
         e.returnValue = text;
     }
 });
@@ -19,16 +19,41 @@ function init() {
            delete_tour[i].addEventListener('click', function() {
            delete_tour_select(this);
        });
+       document.getElementById('tours_data_form').addEventListener('submit', function(event) {
+       check_before_submit(event)});
        }
     }
     else {
        let footerHeight = document.querySelector('#footer').offsetHeight;
        document.querySelector('.Main').style.paddingBottom = footerHeight + 10 + 'px';
+       init_drag_and_drop();
        merge_and_split();
        station_color();
        let save_btn = document.getElementById('save_schedule');
        save_btn.addEventListener('click', save_changes);
     }
+}
+
+function check_before_submit(event) {
+    event.preventDefault();
+    let date = document.getElementById('schedule_date_input').value;
+    let endpoint = `/check_before_submit/${date}/`;
+    fetch(endpoint).then(response => response.text()).then(data => {
+        if (data === 'False') {
+            document.getElementById('tours_data_form').submit();
+        }
+        else {
+            document.getElementById('warning_msg').style.display = 'flex';
+            document.getElementById('add_tours_data').style.opacity = 0.2;
+            document.getElementById('recreate').addEventListener('click', function() {
+            document.getElementById('tours_data_form').submit();
+            });
+            document.getElementById('view').addEventListener('click', function() {
+            window.location.href = `/view_schedule/${date}/`;
+            });
+        }
+
+    });
 }
 
 function set_date() {
@@ -87,6 +112,15 @@ function updateData(station_name, cell) {
     let endpoint = '/update_schedule/' + station_name + '/' + time_slot + '/' + tour_index + '/';
     fetch(endpoint).then(response => response.text()).then(data => {
         if (data === 'False') {
+            let text = 'לא ניתן לשבץ את התחנה בחלון הזמן הנבחר';
+            let tempMsg = document.getElementById('tempMsg');
+            tempMsg.textContent = text;
+            tempMsg.style.display = 'flex';
+            document.querySelector('.Main').style.opacity = 0.3;
+            setTimeout(function() {
+                tempMsg.style.display = 'none';
+                document.querySelector('.Main').style.opacity = 1;
+            }, 2000);
             return false;
         }
         else {
@@ -97,6 +131,7 @@ function updateData(station_name, cell) {
             cell.closest('td').appendChild(div);
             station_color();
             save_flag = true;
+            init_drag_and_drop();
             return true;
         }
 
@@ -123,11 +158,14 @@ function deleteData(station_name, station) {
             save_flag = true;
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
     });
 }
 
-$(function() {
+function init_drag_and_drop() {
+    $(function() {
         // Make elements with the class 'draggable' draggable
         $(".draggable_station").draggable({
             helper: "clone",  // Create a copy of the element while dragging
@@ -146,11 +184,8 @@ $(function() {
         $(".droppable").droppable({
             accept: ".draggable_station",  // Accept only elements with the class 'draggable'
             drop: function(event, ui) {
-            console.log($(this).children(".draggable_cell"));
                 if ($(this).children(".draggable_cell").length == 0) {
-                    console.log("if 1");
                     if (updateData(ui.helper.text(), this)) {
-                        console.log("if 2");
                         let newCell = $('<div class="draggable_cell" dir="rtl"></div>').text(ui.helper.text()).data("station-id", ui.helper.data("station-id"));
                         $(this).html(newCell);
                         newCell.draggable({
@@ -187,9 +222,8 @@ $(function() {
                 }
             }
         });
-});
-
-
+    });
+}
 
 function station_color() {
     let stations = document.querySelectorAll('.draggable_station');
@@ -218,13 +252,30 @@ function save_changes() {
     let endpoint = '/save_changes/' + date_str + '/' + schedule_str + '/';
     fetch(endpoint).then(response => response.text()).then(data => {
         if (data === 'False') {
-            return false;
+            let text = 'השינויים שביצעת לא נשמרו';
+            let tempMsg = document.getElementById('tempMsg');
+            tempMsg.textContent = text;
+            tempMsg.style.display = 'flex';
+            document.querySelector('.Main').style.opacity = 0.3;
+            setTimeout(function() {
+                tempMsg.style.display = 'none';
+                document.querySelector('.Main').style.opacity = 1;
+            }, 2000);
+            save_flag = false;
         }
         else {
-            return true;
+            let text = 'השינויים שביצעת נשמרו בהצלחה!';
+            let tempMsg = document.getElementById('tempMsg');
+            tempMsg.textContent = text;
+            tempMsg.style.display = 'flex';
+            document.querySelector('.Main').style.opacity = 0.3;
+            setTimeout(function() {
+                tempMsg.style.display = 'none';
+                document.querySelector('.Main').style.opacity = 1;
+            }, 2000);
+            save_flag = true;
         }
     });
-    save_flag = false;
 }
 
 function get_schedule() {

@@ -1,5 +1,8 @@
 body {
     height: 100%;
+    background-image: url("img/parkKarasoBackground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
  #createSched_tab {
@@ -117,6 +120,43 @@ body {
     align-self: center;
 }
 
+#warning_msg {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width: 30%;
+    border: 1px solid black;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#warning_msg h1 {
+    color: red;
+    font-family: Tahoma, "Trebuchet MS", sans-serif;
+}
+
+.warning_msg_btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#recreate, #view {
+    background-color: #051331;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin: 10px;
+    cursor: pointer;
+}
+
 #all_stations {
     display: flex;
     flex-wrap: wrap;
@@ -143,9 +183,13 @@ body {
  }
 
  .draggable_cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
-    padding: 10px;
+    height: 100%;
     cursor: pointer;
+    padding: 10px;
  }
 
 .ui-draggable-dragging {
@@ -183,7 +227,7 @@ table {
  }
 
  td input {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     text-align: center;
     border: none;
     height: 100%;
@@ -199,16 +243,31 @@ table {
     cursor: pointer;
 }
 
+#tempMsg {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    font-weight: bold;
+    font-size: 120%;
+}
+
 #footer {
     display: flex;
     background-color: white;
     position: fixed;
     bottom: 0;
+    border-top: 1px solid #051331;
 }
 
  #trash {
     padding: 25px 20px;
     margin: 20px;
-    background-color: green;
+    background-color: #6699FF;
     border-radius: 50px;
  }

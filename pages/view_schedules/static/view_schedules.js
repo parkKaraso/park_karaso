@@ -33,6 +33,8 @@ function init() {
     document.querySelector('.Main').style.paddingBottom = footerHeight + 10 + 'px';
     let save_btn = document.getElementById('save_schedule');
     save_btn.addEventListener('click', save_changes);
+    let pdf_btn = document.getElementById('to_pdf');
+    pdf_btn.addEventListener('click', schedule_to_pdf);
 }
 
 function init_calendar_data() {
@@ -71,6 +73,8 @@ function get_schedule(date) {
         else {
             document.getElementById('schedule').style.display = 'flex';
             document.getElementById('no_schedule').style.display = 'none';
+            let formmated_date = 'לוח זמנים לתאריך ' + date.substring(8,10) + '/' + date.substring(5,7) + '/' + date.substring(0,4);
+            document.getElementById('schedule_header').textContent = formmated_date;
             show_schedule_data(data.data);
             merge_and_split();
             station_color();
@@ -156,12 +160,21 @@ function updateData(station_name, cell) {
     let tour_index = (Number(cell.closest('tr').getAttribute("data-row-index")) - 1).toString();
     let selectedDate_str = document.getElementById('datepicker').value;
     let selectedDate = new Date(selectedDate_str);
-    let date = selectedDate.getFullYear() + '-' +
+    let date_data = selectedDate.getFullYear() + '-' +
                                ('0' + (selectedDate.getMonth() + 1)).slice(-2) + '-' +
                                ('0' + selectedDate.getDate()).slice(-2);
-    let endpoint = '/update_schedule/' + station_name + '/' + time_slot + '/' + tour_index + '/' + date + '/';
+    let endpoint = '/update_schedule/' + station_name + '/' + time_slot + '/' + tour_index + '/' + date_data + '/';
     fetch(endpoint).then(response => response.text()).then(data => {
         if (data === 'False') {
+            let text = 'לא ניתן לשבץ את התחנה בחלון הזמן הנבחר';
+            let tempMsg = document.getElementById('tempMsg');
+            tempMsg.textContent = text;
+            tempMsg.style.display = 'flex';
+            document.querySelector('.Main').style.opacity = 0.3;
+            setTimeout(function() {
+                tempMsg.style.display = 'none';
+                document.querySelector('.Main').style.opacity = 1;
+            }, 2000);
             return false;
         }
         else {
@@ -172,6 +185,7 @@ function updateData(station_name, cell) {
             cell.closest('td').appendChild(div);
             station_color();
             save_flag = true;
+            drag_and_drop();
             return true;
         }
 
@@ -200,6 +214,7 @@ function deleteData(station_name, station) {
                 cell.setAttribute('data-time-slot', data_time_slot);
                 cell.parentNode.insertBefore(newCell, cell.nextSibling);
             }
+            drag_and_drop();
             save_flag = true;
             return true;
         }
@@ -227,11 +242,9 @@ function drag_and_drop() {
         $(".droppable").droppable({
             accept: ".draggable_station",  // Accept only elements with the class 'draggable'
             drop: function(event, ui) {
-            console.log($(this).children(".draggable_cell"));
                 if ($(this).children(".draggable_cell").length == 0) {
                     console.log("if 1");
                     if (updateData(ui.helper.text(), this)) {
-                        console.log("if 2");
                         let newCell = $('<div class="draggable_cell" dir="rtl"></div>').text(ui.helper.text()).data("station-id", ui.helper.data("station-id"));
                         $(this).html(newCell);
                         newCell.draggable({
@@ -292,22 +305,37 @@ function station_color() {
 }
 
 function save_changes() {
-    let schedule_date = document.getElementById('schedule_date').textContent;
-    let yyyy = schedule_date.substring(6, 10);
-    let mm = schedule_date.substring(3, 5);
-    let dd = schedule_date.substring(0, 2);
-    let date_str = yyyy + '-' + mm + '-' + dd;
+    let selectedDate_str = document.getElementById('datepicker').value;
+    let selectedDate = new Date(selectedDate_str);
+    let date_str = selectedDate.getFullYear() + '-' +
+                               ('0' + (selectedDate.getMonth() + 1)).slice(-2) + '-' +
+                               ('0' + selectedDate.getDate()).slice(-2);
     let schedule_str = JSON.stringify(get_schedule_updates());
     let endpoint = '/save_changes/' + date_str + '/' + schedule_str + '/';
     fetch(endpoint).then(response => response.text()).then(data => {
         if (data === 'False') {
-            return false;
+            let text = 'השינויים שביצעת לא נשמרו';
+            let tempMsg = document.getElementById('tempMsg');
+            tempMsg.textContent = text;
+            tempMsg.style.display = 'flex';
+            document.querySelector('.Main').style.opacity = 0.3;
+            setTimeout(function() {
+                tempMsg.style.display = 'none';
+                document.querySelector('.Main').style.opacity = 1;
+            }, 2000);
         }
         else {
-            return true;
+            let text = 'השינויים שביצעת נשמרו בהצלחה!';
+            let tempMsg = document.getElementById('tempMsg');
+            tempMsg.textContent = text;
+            tempMsg.style.display = 'flex';
+            document.querySelector('.Main').style.opacity = 0.3;
+            setTimeout(function() {
+                tempMsg.style.display = 'none';
+                document.querySelector('.Main').style.opacity = 1;
+            }, 2000);
         }
     });
-    save_flag = false;
 }
 
 function get_schedule_updates() {
@@ -343,4 +371,23 @@ function get_schedule_updates() {
         }
     }
     return schedule;
+}
+
+async function schedule_to_pdf() {
+    let { jsPDF } = window.jspdf;
+    let pdf = new jsPDF('p', 'mm', 'a4');
+    let schedule_header = await html2canvas(document.getElementById('schedule_header'));
+    pdf.addImage(schedule_header.toDataURL(), 'JPEG', 55, 10, 100, 10);
+    let schedule_table = document.getElementById('schedule').querySelector('table');
+    let schedule = await html2canvas(schedule_table);
+    let proportion = Number(schedule_table.offsetHeight)/Number(schedule_table.offsetWidth);
+    let new_height = Math.round(proportion * 190);
+    pdf.addImage(schedule.toDataURL(), 'JPEG', 10, 30, 190, new_height);
+    let to_selectedDate_str = document.getElementById('datepicker').value;
+    let to_selectedDate = new Date(to_selectedDate_str);
+    let formmated_date = ('0' + to_selectedDate.getDate()).slice(-2) + '/'
+            + ('0' + (to_selectedDate.getMonth() + 1)).slice(-2) + '/'
+            + to_selectedDate.getFullYear();
+    let file_name = formmated_date + '.pdf';
+    pdf.save(file_name);
 }

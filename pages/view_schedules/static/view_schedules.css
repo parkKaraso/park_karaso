@@ -56,9 +56,13 @@ body {
  }
 
  .draggable_cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
-    padding: 10px;
     cursor: pointer;
+    height: 100%;
+    padding: 10px;
  }
 
 .ui-draggable-dragging {
@@ -75,9 +79,11 @@ body {
 
 #no_schedule {
     display: none;
+    flex-grow: 1;
     font-size: 200%;
     font-weight: bold;
     text-align: center;
+    justify-content: center;
 }
 
 #schedule_header {
@@ -100,23 +106,43 @@ table {
     background-color: white;
     border: 1px solid black;
     text-align: center;
+    padding: 0;
  }
 
  td input {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     text-align: center;
     border: none;
     height: 100%;
  }
 
-#save_schedule {
+#buttons {
+    display: flex;
+}
+
+#save_schedule, #to_pdf {
     background-color: #051331;
     color: white;
     font-weight: bold;
     border: none;
     border-radius: 10px;
     padding: 10px 30px;
+    margin: 10px;
     cursor: pointer;
+}
+
+#tempMsg {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    font-weight: bold;
+    font-size: 120%;
 }
 
 #footer {
@@ -124,12 +150,12 @@ table {
     background-color: white;
     position: fixed;
     bottom: 0;
-
+    border-top: 1px solid #051331;
 }
 
  #trash {
     padding: 25px 20px;
     margin: 20px;
-    background-color: green;
+    background-color: #6699FF;
     border-radius: 50px;
  }

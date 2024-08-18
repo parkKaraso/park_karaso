@@ -41,6 +41,14 @@
                     <input id="create_schedule" type="submit" value="צור לוח זמנים" >
                 </form>
             </div>
+            <div id="warning_msg">
+                <h1 dir="rtl">אזהרה!</h1>
+                <p dir="rtl">בתאריך הנבחר קיים לוח זמנים. האם תרצה ליצור לוח זמנים חדש לתאריך זה או לצפות בלוח הזמנים הקיים?</p>
+                <div class="warning_msg_btns">
+                    <button id="recreate">יצירת לו"ז</button>
+                    <button id="view">צפייה בלו"ז הקיים</button>
+                </div>
+            </div>
         {% else %}
         <div id="schedule">
             <h1 id="schedule_header" dir="rtl">שיבוץ סיורים לתאריך {{ schedule_date }}</h1>
@@ -73,7 +81,9 @@
             <div id="save_schedule" dir="rtl">שמור שינויים</div>
         </div>
     </div>
-    <div id="colors"></div>
+    <div class="tempMsg">
+            <p id="tempMsg" dir="rtl">השינויים שביצעת נשמרו בהצלחה!</p>
+    </div>
     <div id="footer">
         <div id="trash"><i class="fa-solid fa-trash-can fa-2xl"></i></div>
         <div id="all_stations">
