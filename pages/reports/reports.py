@@ -23,7 +23,6 @@ def get_dashboard_data(from_date, to_date):
         stations_names = get_stations_names()
         schedules = get_schedules_by_dates(from_date, to_date)
         tours_appearance = calculate_tours_appearance(schedules)
-        print(tours_appearance)
         stations_usage = calculate_stations_usage(schedules)
         answer = {
             'tours_names': tours_names,

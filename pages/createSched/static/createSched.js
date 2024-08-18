@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', init);
-let save_flag = false;
+let save_flag = true;
 
 window.addEventListener('beforeunload', function (e) {
-    if (save_flag) {
+    if (!save_flag) {
         let text = "לצאת מהעמוד? ייתכן שהשינויים שביצעת לא יישמרו.";
         e.returnValue = text;
     }
@@ -72,6 +72,7 @@ function add_tour_select() {
     delete_btn.addEventListener('click', function() {
     delete_tour_select(this);
     });
+    new_element.querySelector('input').value = 1;
     let all_selects = document.getElementById('all_selects');
     all_selects.appendChild(new_element);
 }
@@ -296,6 +297,10 @@ function get_schedule() {
         if (cells.length > 0) {
             let tour_name = table_rows[i].querySelector('.tour_name').textContent;
             tour_schedule['tour_name'] = tour_name;
+            let school_input = table_rows[i].querySelector('.school_name').value;
+            tour_schedule['school_name'] = school_input;
+            let guide_input = table_rows[i].querySelector('.guide_name').value;
+            tour_schedule['guide_name'] = guide_input;
             for (let j=0; j<cells.length; j++) {
                 let time = Number(cells[j].getAttribute("data-time-slot"));
                 let duration = cells[j].getAttribute("colspan");

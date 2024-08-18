@@ -114,11 +114,15 @@ function show_schedule_data(data) {
             td.appendChild(div);
             new_row.appendChild(td);
         }
-        for (let i = 0; i < 2; i++) {
+        let class_names = ['guide_name', 'school_name'];
+        let input_values = [schedule_data[i]['guide_name'], schedule_data[i]['school_name']];
+        for (let k = 0; k < 2; k++) {
             let cell = document.createElement('td');
             cell.setAttribute('dir', 'rtl');
             let input = document.createElement('input');
             input.setAttribute('type', 'text');
+            input.className = class_names[k];
+            input.value = input_values[k];
             cell.appendChild(input);
             new_row.appendChild(cell);
         }
@@ -284,9 +288,6 @@ function drag_and_drop() {
     });
 }
 
-
-
-
 function station_color() {
     let stations = document.querySelectorAll('.draggable_station');
     let stations_cell = document.querySelectorAll('.draggable_cell');
@@ -311,6 +312,8 @@ function save_changes() {
                                ('0' + (selectedDate.getMonth() + 1)).slice(-2) + '-' +
                                ('0' + selectedDate.getDate()).slice(-2);
     let schedule_str = JSON.stringify(get_schedule_updates());
+    console.log(date_str);
+    console.log(schedule_str);
     let endpoint = '/save_changes/' + date_str + '/' + schedule_str + '/';
     fetch(endpoint).then(response => response.text()).then(data => {
         if (data === 'False') {
@@ -356,6 +359,10 @@ function get_schedule_updates() {
         if (cells.length > 0) {
             let tour_name = table_rows[i].querySelector('.tour_name').textContent;
             tour_schedule['tour_name'] = tour_name;
+            let school_name = table_rows[i].querySelector('.school_name').value;
+            tour_schedule['school_name'] = school_name;
+            let guide_name = table_rows[i].querySelector('.guide_name').value;
+            tour_schedule['guide_name'] = guide_name;
             for (let j=0; j<cells.length; j++) {
                 let time = Number(cells[j].getAttribute("data-time-slot"));
                 let duration = cells[j].getAttribute("colspan");

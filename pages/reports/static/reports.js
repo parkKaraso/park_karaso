@@ -103,29 +103,36 @@ function create_summarize_data(schedules, from_selectedDate, to_selectedDate) {
 
 function create_line_chart(schedules) {
     schedule_dates = [];
+    schedules_num_of_tours = [];
     for (let i=0; i<schedules.length; i++) {
         let date = new Date(schedules[i]['date']);
         schedule_dates.push(date);
+        schedules_num_of_tours.push(schedules[i]['schedule'].length);
     }
-    schedule_dates.sort(function(a, b) {
-        return (a - b);
-    });
     let date_array = [];
-    let current_date = schedule_dates[0];
+    let current_date = new Date(Math.min.apply(null, schedule_dates.map(date => date.getTime())));
+    let data_array = [];
     while (current_date <= schedule_dates[schedule_dates.length-1]) {
         let formmated_date = ('0' + current_date.getDate()).slice(-2) + '/'
             + ('0' + (current_date.getMonth() + 1)).slice(-2) + '/'
             + current_date.getFullYear();
         date_array.push(formmated_date);
+        let index = findDateIndex(schedule_dates, current_date);
+        if (index == -1) {
+            data_array.push(0);
+        }
+        else {
+            data_array.push(schedules_num_of_tours[index]);
+        }
         current_date.setDate(current_date.getDate() + 1);
     }
-    console.log(date_array);
+    console.log(data_array);
     new Chart('line_chart', {
         type: 'line',
         data: {
             labels: date_array,
             datasets: [{
-                data: [1,2,3,4],
+                data: data_array,
                 fill: false,
                 backgroundColor: "#b91d47"
             }]
@@ -250,7 +257,7 @@ function create_bar_chart(stations_names, stations_usage) {
             responsive: true,
             title: {
                 display: true,
-                text: 'פילוח סיורים לפי שם תוכנית',
+                text: 'ניצולת תחנות',
                 fontSize: 20,
                 fontFamily: 'Tahoma',
                 fontStyle: 'bold',
@@ -284,4 +291,12 @@ async function report_to_pdf() {
     pdf.addImage(bar_chart_canvas.toDataURL(), 'JPEG', 5, 150, 200, 85);
 
     pdf.save('downloaded_charts.pdf');
+}
+
+function findDateIndex(dates, dateToFind) {
+    return dates.findIndex(date =>
+        date.getFullYear() === dateToFind.getFullYear() &&
+        date.getMonth() === dateToFind.getMonth() &&
+        date.getDate() === dateToFind.getDate()
+    );
 }

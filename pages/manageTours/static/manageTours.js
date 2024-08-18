@@ -195,8 +195,6 @@ function edit_mandatory_tag(selected) {
         tag_list.removeChild(tag);
         let hidden_input_container = document.getElementById('edit_mandatory_selected');
         let hidden_input = document.querySelector(`input[value="${selected}"]`);
-        console.log(hidden_input);
-        console.log(hidden_input_container.children);
         hidden_input_container.removeChild(hidden_input);
         });
     tag.appendChild(tag_btn);
