@@ -8,7 +8,7 @@ const hebrewSettings = {
 
 function init() {
     let today = new Date();
-    let first_date = new Date(document.getElementById('first_date').textContent);
+    let first_date = new Date('2024-08-20');
     from_picker = new Pikaday({
         field: document.getElementById('from_datepicker'),
         firstDay: 0,
