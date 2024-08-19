@@ -49,3 +49,11 @@ def get_stations(station_name):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+@manageStations.route('/deleteStation', methods=['GET'])
+def deleteStation():
+    station_name = request.args.get('name')
+    delete_station(station_name)
+    stations = get_unique_stations_list()
+    msg = "התחנה נמחקה בהצלחה!"
+    return render_template('manageStations.html', stations=stations, message=msg)

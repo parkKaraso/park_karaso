@@ -61,8 +61,8 @@ body {
     align-items: center;
     border: none;
     cursor: pointer;
-    height: 100%;
-    padding: 10px;
+    padding: 10px 2px;
+    height: inherit;
  }
 
 .ui-draggable-dragging {
@@ -107,6 +107,8 @@ table {
     border: 1px solid black;
     text-align: center;
     padding: 0;
+    height: inherit;
+    width: fit-content;
  }
 
  td input {

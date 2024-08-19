@@ -55,3 +55,13 @@ def get_tour(tour_name):
         return jsonify(tour), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@manageTours.route('/deleteTour', methods=['GET'])
+def deleteTour():
+    tour_name = request.args.get('name')
+    delete_tour(tour_name)
+    tours = get_tours_list()
+    stations = get_unique_stations_list()
+    msg = "הסיור נמחק בהצלחה!"
+    return render_template('manageTours.html', tours=tours, stations=stations, message=msg)

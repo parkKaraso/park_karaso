@@ -14,18 +14,27 @@
         <button id="crudBtn">עריכה / הוספה</button>
         <table id="stationsTable">
             <tr>
+                <th class="delete_station_btn"></th>
                 <th dir="rtl">זמן סיור</th>
                 <th dir="rtl">גיל</th>
                 <th dir="rtl">שם תחנה</th>
             </tr>
             {% for station in stations %}
                 <tr>
+                    <td class="delete_station_btn"><button>X</button></td>
                     <td dir="rtl">{{ station['זמן סיור'] }} שעה</td>
                     <td dir="rtl">{{ station['גיל'][0] }}-{{ station['גיל'][1] }}</td>
-                    <td dir="rtl">{{ station['שם תחנה'] }}</td>
+                    <td class="station_name" dir="rtl">{{ station['שם תחנה'] }}</td>
                 </tr>
             {% endfor %}
         </table>
+        <div id="delete_msg">
+            <p dir="rtl"></p>
+            <div id="delete_msg_btns">
+                <button id="cancel" dir="rtl">ביטול</button>
+                <button id="delete" dir="rtl">מחק תחנה</button>
+            </div>
+        </div>
         <div class="crudPopup">
         <div class="topBtn">
             <button id="editBtn">ערוך תחנה</button>
@@ -145,8 +154,8 @@
 
 {% if message %}
         <div class="tempMsg">
-            <p id="tempMsg"> {{ message }}</p>
-            <button id="okBtn">OK</button>
+            <p id="tempMsg" dir="rtl"> {{ message }}</p>
+            <button id="okBtn" onclick="close_msg()">OK</button>
         </div>
 {% endif %}
 

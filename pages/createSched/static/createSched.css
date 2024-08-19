@@ -180,16 +180,11 @@ body {
     cursor: pointer;
  }
 
- .draggable:hover {
-    background-color: darkgray;
- }
-
  .draggable_cell {
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
-    height: 100%;
     cursor: pointer;
     padding: 10px;
  }
@@ -226,6 +221,7 @@ table {
     background-color: white;
     border: 1px solid black;
     text-align: center;
+    height: fit-content;
  }
 
  td input {

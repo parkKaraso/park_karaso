@@ -72,8 +72,7 @@ def assign_general():
         if is_free_times(station):
             for t in range(len(tours_for_schedule)):
                 if is_free_times(station) and station['שם תחנה'] not in schedule[t].values():
-                    if int(station['גיל'][0]) <= int(tours_for_schedule[t]['גיל'][0]) and int(station['גיל'][1]) >= int(tours_for_schedule[t]['גיל'][1]):
-                        assign_station_to_tour(station, t)
+                    assign_station_to_tour(station, t)
 
 
 def assign_station_to_tour(station, tour_index):
@@ -135,6 +134,7 @@ def create_schedule_arr():
         tour_schedule['tour_name'] = tours_for_schedule[key]['סיור']
         tour_schedule['school_name'] = ''
         tour_schedule['guide_name'] = ''
+        tour_schedule['laboratory_name'] = ''
         schedule_arr.append(tour_schedule)
     return schedule_arr
 

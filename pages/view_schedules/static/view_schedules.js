@@ -103,6 +103,16 @@ function show_schedule_data(data) {
         let new_row = document.createElement('tr');
         new_row.setAttribute('data-row-index', i+1);
         let tour_dict = schedule_data[i];
+
+        let cell = document.createElement('td');
+            cell.setAttribute('dir', 'rtl');
+            let input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.className = 'laboratory_name';
+            input.value = schedule_data[i]['laboratory_name'];
+            cell.appendChild(input);
+            new_row.appendChild(cell);
+
         for (let j=0; j<time_slot.length; j++) {
             let td = document.createElement('td');
             td.className = "droppable";
@@ -293,7 +303,7 @@ function station_color() {
     let stations_cell = document.querySelectorAll('.draggable_cell');
     let colors = ['#FF5733', '#FFC0CB', '#6495ED', '#CCCCFF', '#FFD700', '#808000',
     '#00FFFF', '#0000FF', '#FFA07A', '#20B2AA', '#87CEFA', '#00FA9A', '#C71585',
-    '#FFE4B5', '#6B8E23', '#FFA500', '#FF4500', '#6A5ACD'];
+    '#FFE4B5', '#4EA72E', '#FFA500', '#FF4500', '#6A5ACD'];
     for (let i=0; i<stations.length; i++) {
         let station_name = stations[i].textContent;
         stations[i].style.backgroundColor = colors[i];
@@ -363,6 +373,8 @@ function get_schedule_updates() {
             tour_schedule['school_name'] = school_name;
             let guide_name = table_rows[i].querySelector('.guide_name').value;
             tour_schedule['guide_name'] = guide_name;
+            let laboratory_name = table_rows[i].querySelector('.laboratory_name').value;
+            tour_schedule['laboratory_name'] = laboratory_name;
             for (let j=0; j<cells.length; j++) {
                 let time = Number(cells[j].getAttribute("data-time-slot"));
                 let duration = cells[j].getAttribute("colspan");

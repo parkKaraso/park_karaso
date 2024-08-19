@@ -294,8 +294,33 @@ function updateData() {
     });
   }
 
-const ok_btn = document.getElementById('okBtn');
-ok_btn.addEventListener('click', close_msg);
+const delete_tour_td = document.querySelectorAll('.delete_tour_btn button');
+
+for (let i=0; i<delete_tour_td.length; i++) {
+    delete_tour_td[i].addEventListener('click', delete_tour_msg);
+    delete_tour_td[i].addEventListener('mouseover', function() {
+        this.closest('tr').querySelector('.tour_name').style.fontWeight = 'bold';
+    });
+    delete_tour_td[i].addEventListener('mouseleave', function() {
+        this.closest('tr').querySelector('.tour_name').style.fontWeight = 'normal';
+    });
+}
+
+function delete_tour_msg() {
+    let msg = document.getElementById('delete_msg');
+    msg.style.display = 'flex';
+    let tour_name = this.closest('tr').querySelector('.tour_name').textContent;
+    let text = 'האם אתה בטוח שתרצה למחוק את הסיור ' + '"' + tour_name + '"?';
+    msg.querySelector('p').textContent = text;
+    document.getElementById('delete').addEventListener('click', function() {delete_tour(tour_name)});
+    document.getElementById('cancel').addEventListener('click', function() {
+        msg.style.display = 'none';
+    });
+}
+
+function delete_tour(tour_name) {
+    window.location.href = "/deleteTour?name=" + encodeURIComponent(tour_name);
+}
 
 function close_msg() {
     let temp_msg = document.querySelector(`.tempMsg`);

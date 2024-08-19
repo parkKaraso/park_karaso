@@ -78,12 +78,40 @@ function updateData() {
     });
   }
 
-msg_ok_btn.addEventListener('click', close_msg);
+const delete_station_td = document.querySelectorAll('.delete_station_btn button');
+
+for (let i=0; i<delete_station_td.length; i++) {
+    delete_station_td[i].addEventListener('click', delete_station_msg);
+    delete_station_td[i].addEventListener('mouseover', function() {
+        this.closest('tr').querySelector('.station_name').style.fontWeight = 'bold';
+    });
+    delete_station_td[i].addEventListener('mouseleave', function() {
+        this.closest('tr').querySelector('.station_name').style.fontWeight = 'normal';
+    });
+}
+
+function delete_station_msg() {
+    let msg = document.getElementById('delete_msg');
+    msg.style.display = 'flex';
+    let station_name = this.closest('tr').querySelector('.station_name').textContent;
+    let text = 'האם אתה בטוח שתרצה למחוק את התחנה ' + '"' + station_name + '"?';
+    msg.querySelector('p').textContent = text;
+    document.getElementById('delete').addEventListener('click', function() {delete_station(station_name)});
+    document.getElementById('cancel').addEventListener('click', function() {
+        msg.style.display = 'none';
+    });
+}
+
+function delete_station(station_name) {
+    window.location.href = "/deleteStation?name=" + encodeURIComponent(station_name);
+}
 
 function close_msg() {
     let temp_msg = document.querySelector(".tempMsg");
     temp_msg.style.display = "none";
 }
+
+
 
 
 

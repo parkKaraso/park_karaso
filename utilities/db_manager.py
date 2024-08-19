@@ -75,9 +75,9 @@ def insert_station(station):
         "זמן סיור": station['time'],
         "זמנים פנויים": []}
     if station['time'] == 1:
-        station_dict['זמנים פנויים'] = [9, 10, 11]
+        station_dict['זמנים פנויים'] = [9.0, 10.0, 11.0]
     else:
-        station_dict['זמנים פנויים'] = [9, 9.5, 10, 10.5, 11, 11.5]
+        station_dict['זמנים פנויים'] = [9.0, 9.5, 10.0, 10.5, 11.0, 11.5]
     flag = int(station['groups'])
     for x in range(flag):
         station_list.append(station_dict.copy())
@@ -93,6 +93,14 @@ def update_station(station):
         free_times = [9, 9.5, 10, 10.5, 11, 11.5]
     stations_unique_col.update_one(my_query, { '$set': {'זמן סיור': station['זמן סיור'], 'גיל': station['גיל']}})
     stations_col.update_many(my_query, { '$set': {'זמן סיור': station['זמן סיור'], 'גיל': station['גיל'], 'זמנים פנויים': free_times}})
+
+
+def delete_station(station_name):
+    if station_name == 'מעבדה של תוכנית חד פעמית' or station_name == 'מעבדת התנסויות':
+        stations_unique_col.delete_one({'שם תחנה': station_name})
+    else:
+        stations_unique_col.delete_one({'שם תחנה': station_name})
+        stations_col.delete_many({'שם תחנה': station_name})
 
 
 def get_tours_list():
@@ -138,6 +146,10 @@ def update_tour(tour):
 def find_tour_by_name(tour_name):
     my_query = {'סיור': tour_name}
     return list(tours_col.find(my_query, {"_id": 0}))
+
+
+def delete_tour(tour_name):
+    tours_col.delete_one({'סיור': tour_name})
 
 
 def create_tours_for_schedule(tours_names, number_of_groups):

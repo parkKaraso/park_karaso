@@ -24,7 +24,7 @@ def init_stations():
     global schedule
     for tour in schedule:
         for key in tour:
-            if key != 'tour_name':
+            if key not in ['tour_name', 'school_name', 'guide_name', 'laboratory_name']:
                 init_available_times(float(key), tour[key])
 
 

@@ -15,6 +15,7 @@
         <button id="crudBtn">עריכה / הוספה</button>
         <table id="toursTable">
             <tr>
+                <th class="delete_tour_btn"></th>
                 <th dir="rtl">מסלול אידיאלי</th>
                 <th dir="rtl">תחנות חובה</th>
                 <th dir="rtl">גיל</th>
@@ -22,13 +23,21 @@
             </tr>
             {% for tour in tours %}
                 <tr>
+                    <td class="delete_tour_btn"><button>X</button></td>
                     <td dir="rtl" class="ideal_track">{{ tour['מסלול אידיאלי'] }}</td>
                     <td dir="rtl" class="mandatory_list">{{ tour['תחנות חובה'] }}</td>
                     <td dir="rtl">{{ tour['גיל'][0] }}-{{ tour['גיל'][1] }}</td>
-                    <td dir="rtl">{{ tour['סיור'] }}</td>
+                    <td dir="rtl" class="tour_name">{{ tour['סיור'] }}</td>
                 </tr>
             {% endfor %}
         </table>
+        <div id="delete_msg">
+            <p dir="rtl"></p>
+            <div id="delete_msg_btns">
+                <button id="cancel" dir="rtl">ביטול</button>
+                <button id="delete" dir="rtl">מחק סיור</button>
+            </div>
+        </div>
         <div class="crudPopup">
             <div class="topBtn">
                 <button id="editBtn">ערוך סיור</button>
@@ -192,7 +201,7 @@
         {% if message %}
             <div class="tempMsg">
                 <p id="tempMsg"> {{ message }}</p>
-                <button id="okBtn">OK</button>
+                <button id="okBtn" onclick="close_msg()">OK</button>
             </div>
         {% endif %}
     </div>

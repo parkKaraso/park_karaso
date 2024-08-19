@@ -17,11 +17,11 @@ function init() {
        let delete_tour = document.querySelector('.delete_tour');
        for (let i=0; i<delete_tour.length; i++) {
            delete_tour[i].addEventListener('click', function() {
-           delete_tour_select(this);
-       });
-       document.getElementById('tours_data_form').addEventListener('submit', function(event) {
-       check_before_submit(event)});
+                delete_tour_select(this);
+           });
        }
+       document.getElementById('tours_data_form').addEventListener('submit', function(e) {
+       check_before_submit(e)});
     }
     else {
        let footerHeight = document.querySelector('#footer').offsetHeight;
@@ -34,8 +34,10 @@ function init() {
     }
 }
 
-function check_before_submit(event) {
-    event.preventDefault();
+function check_before_submit(e) {
+    console.log("check before submit");
+    e.preventDefault();
+    console.log("prevent submit");
     let date = document.getElementById('schedule_date_input').value;
     let endpoint = `/check_before_submit/${date}/`;
     fetch(endpoint).then(response => response.text()).then(data => {
@@ -57,7 +59,7 @@ function check_before_submit(event) {
 }
 
 function set_date() {
-    today = new Date('2024-08-01');
+    today = new Date();
     let yyyy = today.getFullYear();
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let dd = String(today.getDate()).padStart(2, '0');
@@ -231,7 +233,7 @@ function station_color() {
     let stations_cell = document.querySelectorAll('.draggable_cell');
     let colors = ['#FF5733', '#FFC0CB', '#6495ED', '#CCCCFF', '#FFD700', '#808000',
     '#00FFFF', '#0000FF', '#FFA07A', '#20B2AA', '#87CEFA', '#00FA9A', '#C71585',
-    '#FFE4B5', '#6B8E23', '#FFA500', '#FF4500', '#6A5ACD'];
+    '#FFE4B5', '#4EA72E', '#FFA500', '#FF4500', '#6A5ACD'];
     for (let i=0; i<stations.length; i++) {
         let station_name = stations[i].textContent;
         stations[i].style.backgroundColor = colors[i];
@@ -301,6 +303,8 @@ function get_schedule() {
             tour_schedule['school_name'] = school_input;
             let guide_input = table_rows[i].querySelector('.guide_name').value;
             tour_schedule['guide_name'] = guide_input;
+            let laboratory_input = table_rows[i].querySelector('.laboratory_name').value;
+            tour_schedule['laboratory_name'] = laboratory_input;
             for (let j=0; j<cells.length; j++) {
                 let time = Number(cells[j].getAttribute("data-time-slot"));
                 let duration = cells[j].getAttribute("colspan");

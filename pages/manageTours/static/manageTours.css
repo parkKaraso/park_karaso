@@ -238,7 +238,7 @@ th {
 }
 
 tr {
-  background-color: #e0e0e0;
+
 }
 
 td {
@@ -246,26 +246,97 @@ td {
   width: fit-content;
   max-width: 45vw;
   text-align: center;
+  background-color: #e0e0e0;
+}
+
+.delete_tour_btn {
+    width: fit-content;
+    background-color: rgba(255, 255, 255, 0);
+    margin: 0;
+    padding: 0;
+}
+
+.delete_tour_btn button {
+    font-weight: bold;
+    background-color: white;
+    color: red;
+    border: 2px solid red;
+    border-radius: 3px;
+    padding: 5px 7px;
+    cursor: pointer;
+}
+
+#delete_msg {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width: 30%;
+    border: 1px solid black;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#delete_msg p {
+    font-family: Tahoma, "Trebuchet MS", sans-serif;
+}
+
+#delete_msg_btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#delete_msg_btns button {
+    padding: 10px;
+    font-weight: bold;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#delete {
+    background-color: #C6182D;
+    color: white;
+    border: none;
+}
+
+#cancel {
+    background-color: white;
+    border: 1px solid black;
 }
 
 .tempMsg {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 0px;
-  right: 25%;
-  left: 25%;
-  padding: 10px;
-  background-color:rgba(0,0,0,0.9);
-  color: white;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(0, 0, 0);
+    width: 30%;
+    border: 1px solid black;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 150%;
 }
 
-#okBtn {
+.tempMsg button {
   background-color: white;
   color: black;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-#okBtn:hover {
+.tempMsg button:hover {
   background-color: white;
 }

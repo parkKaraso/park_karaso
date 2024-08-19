@@ -37,7 +37,8 @@ def calculate_tours_appearance(schedules):
         appearance[tour] = 0
     for schedule in schedules:
         for t in schedule['schedule']:
-            appearance[t['tour_name']] += 1
+            if t['tour_name'] in tours_names:
+                appearance[t['tour_name']] += 1
     return list(appearance.values())
 
 

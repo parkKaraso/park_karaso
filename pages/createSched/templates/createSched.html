@@ -54,6 +54,7 @@
             <h1 id="schedule_header" dir="rtl">שיבוץ סיורים לתאריך {{ schedule_date }}</h1>
             <table>
                 <tr>
+                    <th dir="rtl">שם מעבדה</th>
                     <th dir="rtl">11:30-12:00</th>
                     <th dir="rtl">11:00-11:30</th>
                     <th dir="rtl">10:30-11:00</th>
@@ -66,6 +67,7 @@
                 </tr>
                 {% for s in schedule %}
                     <tr data-row-index="{{ loop.index }}">
+                        <td dir="rtl"><input class="laboratory_name" type="text" value="{{ s['laboratory_name'] }}"></td>
                         <td class="droppable" data-time-slot="6"><div class="draggable_cell" dir="rtl">{{ s['11.5'] }}</div></td>
                         <td class="droppable" data-time-slot="5"><div class="draggable_cell" dir="rtl">{{ s['11.0'] }}</div></td>
                         <td class="droppable" data-time-slot="4"><div class="draggable_cell" dir="rtl">{{ s['10.5'] }}</div></td>

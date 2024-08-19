@@ -134,7 +134,13 @@ function create_line_chart(schedules) {
         }
         current_date.setDate(current_date.getDate() + 1);
     }
-    console.log(data_array);
+
+    let line_container = document.getElementById('line_chart');
+    line_container.remove();
+    let line_canvas = document.createElement("canvas");
+    line_canvas.id = 'line_chart';
+    document.getElementById('line_chart_div').appendChild(line_canvas);
+
     new Chart('line_chart', {
         type: 'line',
         data: {
@@ -196,6 +202,13 @@ function create_pie_chart(tours_names, tours_appearance) {
         "#003300",
         "#080808"
     ];
+
+    let pie_container = document.getElementById('pie_chart');
+    pie_container.remove();
+    let pie_canvas = document.createElement("canvas");
+    pie_canvas.id = 'pie_chart';
+    document.getElementById('pie_chart_div').appendChild(pie_canvas);
+
     new Chart('pie_chart', {
         type: 'pie',
         data: {
@@ -252,6 +265,13 @@ function create_bar_chart(stations_names, stations_usage) {
         "#003300",
         "#080808"
     ];
+
+    let bar_container = document.getElementById('bar_chart');
+    bar_container.remove();
+    let bar_canvas = document.createElement("canvas");
+    bar_canvas.id = 'bar_chart';
+    document.getElementById('bar_chart_div').appendChild(bar_canvas);
+
     new Chart('bar_chart', {
         type: 'bar',
         data: {
